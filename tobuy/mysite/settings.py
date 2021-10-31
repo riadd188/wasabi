@@ -23,10 +23,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'o3-t#ni=xn20uf(-&t03#&aydg40m%wap2c03_$7f9oc-85_tn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["xxx.xxx.xxx.xxx"]
 
+STATIC_ROOT = '/usr/share/nginx/html/' 
 
 # Application definition
 
