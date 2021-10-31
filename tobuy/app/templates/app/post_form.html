@@ -1,0 +1,31 @@
+{% extends "app/base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<div class="my-4">
+    <h2>品目を登録</h2>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <!-- <div class="formpost">
+        {% render_field form.item class="form-control" placeholder="品目名を入力" %}
+    </div>
+    <div class="formpost">
+        {% render_field form.memo class="form-control" placeholder="備考を入力" %}
+    </div> -->
+    <table class="table">
+        <tbody>
+            {% for field in form %}
+                <tr>
+                    <th><label for="{{ field.id_for_label }}">{{ field.label }}</label></th>
+                    <td>{{ field }} {{ field.errors }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button class="btn btn-primary" type="submit">登録する</button>
+</form>
+
+{% endblock %}
