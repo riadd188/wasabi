@@ -18,19 +18,19 @@
                     <a class="nav-link" href="{% url 'index' %}">ホーム</a>
                 </li>
                 {% if user.is_authenticated %}
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href=""></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_logout' %}">ログアウト</a>
-                    </li>
+                    </li> -->
                 {% else %}
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_signup' %}">サインアップ</a>
-                    </li>
-                    <li class="nav-item">
+                    </li> -->
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="{% url 'account_login' %}">ログイン</a>
-                    </li>
+                    </li> -->
 
                 {% endif %}
 

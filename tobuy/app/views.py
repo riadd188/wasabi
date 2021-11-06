@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views.generic import View
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from .models import Item
 from .forms import ItemForm
 from django.utils import timezone
@@ -11,7 +13,7 @@ from django.utils import timezone
 #             'item_data': item_data
 #         })
 
-class IndexView(View):
+class IndexView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         item_data = Item.objects.order_by('-id')
         # for item in item_data:
@@ -40,7 +42,7 @@ class IndexView(View):
         #     4: '下駄箱',
         #     5: 'その他',
         # }
-
+        
         return render(request, 'app/index.html', {
             'item_data': item_data,
             'isexist_need': isexist_need,
@@ -48,21 +50,21 @@ class IndexView(View):
         })
         
 
-class RestockView(View):
+class RestockView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         item_restock = Item.objects.get(id=self.kwargs['pk'])
         item_restock.need = False
         item_restock.save()
         return redirect('index')
 
-class AddListView(View):
+class AddListView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         item_restock = Item.objects.get(id=self.kwargs['pk'])
         item_restock.need = True
         item_restock.save()
         return redirect('index')
 
-class AddItemView(View):
+class AddItemView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         form = ItemForm(request.POST or None)
         return render(request, 'app/post_form.html', {
@@ -86,7 +88,7 @@ class AddItemView(View):
             'form': form
         })
 
-class DeleteView(View):
+class DeleteView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         item_data = Item.objects.get(id=self.kwargs['pk'])
         return render(request, 'app/item_delete.html', {
@@ -98,7 +100,7 @@ class DeleteView(View):
         item_data.delete()
         return redirect('index')
 
-class EditView(View):
+class EditView(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         item_data = Item.objects.get(id=self.kwargs['pk'])
         form = ItemForm(

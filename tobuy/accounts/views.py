@@ -13,8 +13,8 @@ class LogoutView(views.LogoutView):
         return redirect('/')
 
 
-class SignupView(views.SignupView):
-    template_name = 'accounts/signup.html'
+# class SignupView(views.SignupView):
+#     template_name = 'accounts/signup.html'
     
 
 # Create your views here.
