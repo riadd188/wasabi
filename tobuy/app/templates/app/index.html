@@ -11,45 +11,32 @@
           補充リスト
         </h2>
         
-        <!-- <div class="card"> -->
-            <div class="card-body p-0">
-                {% if isexist_need %}
-                <table class="table table-striped text-center table-sm align-middle">
-                    <style>/*
-                        <thead>
-                            <tr>
-                                <th class="align-middle">品目</th>
-                                <th class="align-middle">補充完了</th>
-                                <!-- <th class="align-middle">備考</th> -->
-                                <!--  <th class="align-middle">追加日</th> -->
-                                <!--  <th class="align-middle">登録者</th> -->
-                                <th class="align-middle"></th>
-                                <th class="align-middle"></th>
-                            </tr>
-                        </thead>
-                    */</style>
-                    <tbody>
-                        {% for item in item_data %}
-                        {% if item.need %}
-                        <tr>
-                             <!-- 補充完了 -->
-                             <th class="align-middle" style="width:100%;">
-                                <a class="btn btn-info" style="width:100%;" href="{% url 'restock' item.id %}">
-                                {{ item.item }}
-                                </a>
-                            </th>
-                        </tr>
-                        {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% else %}
-                <div class="my-4 mx-4">
-                    <h5>補充が必要なものはありません！</h5>
-                </div>
-                {% endif %}
+        <div class="card-body p-0">
+            {% if isexist_need %}
+            <table class="table table-striped text-center table-sm align-middle">
+                <tbody>
+                    {% for item in item_data %}
+                    {% if item.registerer == user %}
+                    {% if item.need %}
+                    <tr>
+                            <!-- 買うものリスト -->
+                        <th class="align-middle" style="width:100%;">
+                            <a class="btn btn-info" style="width:100%;" href="{% url 'restock' item.id %}">
+                            {{ item.item }}
+                            </a>
+                        </th>
+                    </tr>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="my-4 mx-4">
+                <h5>補充が必要なものはありません！</h5>
             </div>
-        <!-- </div> -->
+            {% endif %}
+        </div>
 
         <!-- リストに追加 -->
         <h2 class="mt-4 mb-3"><svg style="vertical-align: bottom;" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
@@ -71,22 +58,9 @@
                 
 
                 <table class="table table-striped text-center table-sm">
-                    <style>/*
-                    <thead>
-                        <tr class="align-middle">
-                            <th class="align-middle">品目</th>
-                            <!--  <th class="align-middle">補充</th> -->
-                            <th class="align-middle">リストに追加</th>
-                            <!-- <th class="align-middle">備考</th> -->
-                            <!--  <th class="align-middle">追加日</th> -->
-                            <!--  <th class="align-middle">登録者</th> -->
-                            <th class="align-middle"></th>
-                            <th class="align-middle"></th>
-                        </tr>
-                    </thead>
-                    */</style>
                     <tbody>
                         {% for item in item_data %}
+                        {% if item.registerer == user %}
                         {% if not item.need %}
                         {% if item.place == place.0 %}
                         <tr>
@@ -94,10 +68,6 @@
                             <!-- 追加ボタン -->
                             <th class="align-middle" style="width:100%;">
                                 <a class="btn btn-success" style="width:100%;" href="{% url 'addlist' item.id %}">
-                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart-plus" viewBox="0 0 16 16">
-                                    <path d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
-                                    <path d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                                  </svg> -->
                                   {{ item.item }}
                                 </a>
                             </th>
@@ -115,6 +85,7 @@
                                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
                               </svg></a></th>
                         </tr>
+                        {% endif %}
                         {% endif %}
                         {% endif %}
                         {% endfor %}
