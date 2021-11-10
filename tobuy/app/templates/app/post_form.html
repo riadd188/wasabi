@@ -18,10 +18,12 @@
     <table class="table table-striped table-sm">
         <tbody>
             {% for field in form %}
-                <tr>
-                    <th><label for="{{ field.id_for_label }}">{{ field.label }}</label></th>
-                    <td>{{ field }} {{ field.errors }}</td>
-                </tr>
+            <div class="form-group">
+		{{ field.label }}: {{ field | add_class:"form-control" }}
+	    </div>
+	    {% if field.errors %}
+	    	<div class="alert alert-danger" role="alert">{{ field.errors }}</div>
+	    {% endif %}
             {% endfor %}
             <tr><td colspan="2"><button class="btn btn-primary" type="submit" style="width:100%;">登録する</button></td></tr>
         </tbody>
